@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/login_admin.dart';
 import 'package:kmrapp/screens/register.dart';
+import 'package:kmrapp/screens/root.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -130,7 +131,7 @@ class LoginPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HomePage()),
+                                    builder: (context) => const RootPage()),
                               );
                             },
                             child: Container(

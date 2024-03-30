@@ -37,6 +37,9 @@ dependencies:
   ionicons: ^0.2.2
   google_fonts: ^6.2.1
   pdfx: ^2.6.0
+  toggle_switch: ^2.3.0
+  syncfusion_flutter_gauges: ^25.1.37
+  flutter_form_builder: ^9.2.1
 
 dev_dependencies:
   flutter_test:
