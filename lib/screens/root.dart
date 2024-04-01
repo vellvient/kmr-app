@@ -37,6 +37,7 @@ class _RootPageState extends State<RootPage> {
         Scaffold(
           appBar: _selectedIndex == 2
               ? AppBar(
+                  automaticallyImplyLeading: false,
                   toolbarHeight: 320,
                   titleSpacing: 0,
                   centerTitle: true,
@@ -93,6 +94,7 @@ class _RootPageState extends State<RootPage> {
                   ),
                 )
               : AppBar(
+                  automaticallyImplyLeading: false,
                   toolbarHeight: 100,
                   titleSpacing: 0,
                   centerTitle: true,

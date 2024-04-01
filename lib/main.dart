@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           textTheme: GoogleFonts.plusJakartaSansTextTheme(
               Theme.of(context).textTheme)),
-      home: RootPage(),
+      home: OnboardingScreen(),
     );
   }
 }
