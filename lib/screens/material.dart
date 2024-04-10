@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 // use custom TabBar below for borderless TabBar
 class MyTabBar extends StatelessWidget implements PreferredSizeWidget {
@@ -876,6 +877,136 @@ class ResultsPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ListQuestion extends StatefulWidget {
+  const ListQuestion({
+    super.key,
+    required this.index,
+    required this.text,
+    required this.name,
+    required this.callback,
+  });
+  final int index;
+  final String text;
+  final String name;
+  final Function callback;
+
+  @override
+  State<ListQuestion> createState() => _ListQuestionState();
+}
+
+class _ListQuestionState extends State<ListQuestion> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: widget.index % 2 == 0 ? Color(0xFFededeb) : Color(0xFFffffff),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 3),
+              child: Text(widget.index == 1
+                  ? "a."
+                  : widget.index == 2
+                      ? "b."
+                      : widget.index == 3
+                          ? "c."
+                          : widget.index == 4
+                              ? "d."
+                              : widget.index == 5
+                                  ? "e."
+                                  : widget.index == 6
+                                      ? "f."
+                                      : "g."),
+            ),
+            Expanded(flex: 11, child: Text(widget.text)),
+            Expanded(
+              flex: 7,
+              child: FormBuilderRadioGroup(
+                  name: widget.name,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.callback(widget.name, value);
+                    });
+                  },
+                  wrapAlignment: WrapAlignment.spaceAround,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  options: <FormBuilderFieldOption>[
+                    FormBuilderFieldOption(
+                      value: 'y',
+                      child: SizedBox(),
+                    ),
+                    FormBuilderFieldOption(
+                      value: 'n',
+                      child: SizedBox(),
+                    ),
+                  ]),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class singleyesorno extends StatefulWidget {
+  singleyesorno({
+    super.key,
+    required this.name,
+    required this.callback,
+  });
+  final String name;
+  final Function callback;
+
+  @override
+  State<singleyesorno> createState() => _singleyesornoState();
+}
+
+class _singleyesornoState extends State<singleyesorno> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          width: 150,
+          child: FormBuilderRadioGroup(
+              onChanged: (value) {
+                setState(() {
+                  widget.callback(widget.name, value);
+                });
+              },
+              name: widget.name,
+              wrapAlignment: WrapAlignment.spaceBetween,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              options: <FormBuilderFieldOption>[
+                FormBuilderFieldOption(
+                  value: 'y',
+                  child: Text("Yes"),
+                ),
+                FormBuilderFieldOption(
+                  value: 'n',
+                  child: Text("No"),
+                ),
+              ]),
+        )
+      ],
     );
   }
 }

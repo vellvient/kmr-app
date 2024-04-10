@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.plusJakartaSansTextTheme(
               Theme.of(context).textTheme)),
       home: OnboardingScreen(),
+      // home: RootPage(),
     );
   }
 }
