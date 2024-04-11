@@ -40,6 +40,7 @@ class _BMIPageState extends State<BMIPage> {
   late double BMI;
   late double healthyweight1;
   late double healthyweight2;
+  ScrollController listScrollController = ScrollController();
 
   @override
   void dispose() {
@@ -129,6 +130,7 @@ class _BMIPageState extends State<BMIPage> {
                 ? Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: ListView(
+                      controller: listScrollController,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
@@ -409,6 +411,16 @@ class _BMIPageState extends State<BMIPage> {
                                             healthyweight1 = 55.2;
                                             healthyweight2 = 78;
                                           });
+                                          if (listScrollController.hasClients) {
+                                            final position =
+                                                listScrollController
+                                                    .position.minScrollExtent;
+                                            listScrollController.animateTo(
+                                              position,
+                                              duration: Duration(seconds: 1),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          }
                                         },
                                         child: const Align(
                                           alignment: Alignment.center,
@@ -441,6 +453,7 @@ class _BMIPageState extends State<BMIPage> {
                       right: MediaQuery.of(context).size.width * 0.1,
                     ),
                     child: ListView(
+                      controller: listScrollController,
                       children: [
                         GridView.count(
                           shrinkWrap: true,
@@ -637,6 +650,16 @@ class _BMIPageState extends State<BMIPage> {
                                                             2))
                                                     .toStringAsFixed(1));
                                           });
+                                          if (listScrollController.hasClients) {
+                                            final position =
+                                                listScrollController
+                                                    .position.minScrollExtent;
+                                            listScrollController.animateTo(
+                                              position,
+                                              duration: Duration(seconds: 1),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          }
                                         },
                                         child: const Align(
                                           alignment: Alignment.center,
