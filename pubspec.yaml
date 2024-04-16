@@ -40,6 +40,11 @@ dependencies:
   toggle_switch: ^2.3.0
   syncfusion_flutter_gauges: ^25.1.37
   flutter_form_builder: ^9.2.1
+  firebase_core: ^2.28.0
+  firebase_analytics: ^10.10.0
+  firebase_auth: ^4.19.1
+  pin_code_fields: ^7.3.0
+  cloud_firestore: ^4.17.0
 
 dev_dependencies:
   flutter_test:
