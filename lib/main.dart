@@ -4,8 +4,14 @@ import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/login.dart';
 import 'package:kmrapp/screens/onboarding_screen.dart';
 import 'package:kmrapp/screens/root.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+
+Future<void> main() async {
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 

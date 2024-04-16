@@ -1,14 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:kmrapp/screens/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kmrapp/screens/login.dart';
 import 'package:kmrapp/screens/login_admin.dart';
 import 'package:kmrapp/screens/register_admin.dart';
+import 'package:kmrapp/screens/home_page.dart';
+import 'package:kmrapp/screens/verification_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+
+
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController fullNameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController icNumberController = TextEditingController();
+    TextEditingController phoneNumberController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController confirmPasswordController = TextEditingController();
+
+    Future<void> handleRegister() async {
+      String fullName = fullNameController.text;
+      String email = emailController.text;
+      String icNumber = icNumberController.text;
+      String phoneNumber = phoneNumberController.text;
+      String password = passwordController.text;
+      String confirmPassword = confirmPasswordController.text;
+
+      if (password != confirmPassword) {
+        return;
+      }
+
+      try {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        // Get the newly registered user's ID
+        String userId = userCredential.user!.uid;
+
+        // Store user information in Firestore
+        await FirebaseFirestore.instance.collection('users').doc(userId).set({
+          'fullName': fullName,
+          'email': email,
+          'icNumber': icNumber,
+          'phoneNumber': phoneNumber,
+        });
+
+        //can change this
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()), //destination
+        );
+      } catch (e) {
+        // if fail
+        print('Failed to register user: $e');
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -58,6 +114,7 @@ class RegisterPage extends StatelessWidget {
                   height: 70,
                 ),
                 TextField(
+                  controller: fullNameController,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     border: OutlineInputBorder(
@@ -70,6 +127,7 @@ class RegisterPage extends StatelessWidget {
                   height: 30,
                 ),
                 TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 30),
                       border: OutlineInputBorder(
@@ -80,6 +138,7 @@ class RegisterPage extends StatelessWidget {
                   height: 30,
                 ),
                 TextField(
+                  controller: icNumberController,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     border: OutlineInputBorder(
@@ -92,6 +151,7 @@ class RegisterPage extends StatelessWidget {
                   height: 30,
                 ),
                 TextField(
+                  controller: phoneNumberController,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 30),
                       border: OutlineInputBorder(
@@ -102,6 +162,7 @@ class RegisterPage extends StatelessWidget {
                   height: 30,
                 ),
                 TextField(
+                  controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 30),
@@ -115,6 +176,7 @@ class RegisterPage extends StatelessWidget {
                   height: 30,
                 ),
                 TextField(
+                  controller: confirmPasswordController,
                   obscureText: true,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 30),
@@ -167,33 +229,29 @@ class RegisterPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Material(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Color(0xff966FD6),
+                        child: InkWell(
                           borderRadius: BorderRadius.circular(50),
-                          color: Color(0xff966FD6),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(50),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const HomePage()),
-                              );
-                            },
-                            child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: const Text(
-                                  'GET STARTED',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                )),
+                          onTap: handleRegister, // Call the function here
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50)),
+                            child: const Text(
+                              'GET STARTED',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
                           ),
-                        ))
+                        ),
+                      ),
+                    )
                   ],
                 )
               ],
