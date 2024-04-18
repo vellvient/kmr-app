@@ -936,6 +936,11 @@ class _ListQuestionState extends State<ListQuestion> {
               flex: 7,
               child: FormBuilderRadioGroup(
                   name: widget.name,
+                  validator: (value) {
+                    if (value != 'y' && value != 'n') {
+                      return 'Required';
+                    }
+                  },
                   onChanged: (value) {
                     setState(() {
                       widget.callback(widget.name, value);
@@ -985,7 +990,12 @@ class _singleyesornoState extends State<singleyesorno> {
         Container(
           width: 150,
           child: FormBuilderRadioGroup(
-              onChanged: (value) {
+              validator: (value) {
+                if (value != 'y' && value != 'n') {
+                  return 'Required';
+                }
+              },
+              onSaved: (value) {
                 setState(() {
                   widget.callback(widget.name, value);
                 });
@@ -1007,6 +1017,41 @@ class _singleyesornoState extends State<singleyesorno> {
               ]),
         )
       ],
+    );
+  }
+}
+
+class MyTextField extends StatefulWidget {
+  const MyTextField(
+      {super.key, hinttext, required this.name, required this.callback});
+  final String hinttext = '';
+  final String name;
+  final Function callback;
+  @override
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderTextField(
+      name: widget.name,
+      validator: (value) {
+        if (value == null || value == "") {
+          return 'Required';
+        }
+      },
+      onSaved: (value) {
+        setState(() {
+          widget.callback(widget.name, value);
+        });
+      },
+      style: TextStyle(fontSize: 14),
+      decoration: InputDecoration(
+        hintText: widget.hinttext,
+        border: OutlineInputBorder(),
+        contentPadding: EdgeInsets.only(left: 10),
+      ),
     );
   }
 }
