@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:kmrapp/screens/bmi_page.dart';
+import 'package:kmrapp/screens/profile_page.dart';
 import 'package:kmrapp/screens/tcabskk_page.dart';
 import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/location.dart';
@@ -28,7 +29,7 @@ class _RootPageState extends State<RootPage> {
       BMIPage(),
       HomePage(),
       TCABSSKPage(),
-      HomePage(),
+      ProfilePage(),
       // other pages here, replace duplicate later
     ];
     var page = widgetOptions.elementAt(_selectedIndex);
