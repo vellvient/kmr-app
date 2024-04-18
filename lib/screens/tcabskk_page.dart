@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +28,8 @@ class TCABSSKPage extends StatefulWidget {
 }
 
 class _TCABSSKPageState extends State<TCABSSKPage> {
+  final user = FirebaseAuth.instance.currentUser!;
+
   int section = 0;
   ScrollController listScrollController = ScrollController();
 
@@ -1659,10 +1663,19 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                                 }
 
                                                 _formKey.currentState!.save();
-                                                ;
                                                 setState(() {
                                                   section += 1;
-                                                  print(values);
+
+                                                  if (section == 11) {
+                                                    final bsskRef =
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection('users')
+                                                            .doc(user.uid);
+                                                    bsskRef.update({
+                                                      'BSSK': values,
+                                                    });
+                                                  }
                                                 });
                                               },
                                               child: Align(
