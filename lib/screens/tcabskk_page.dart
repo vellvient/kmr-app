@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 
 class TCABSSKPage extends StatefulWidget {
   const TCABSSKPage({super.key});
@@ -33,11 +34,17 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
     'a2': 'u',
     'a3': 'u',
     'a4': 'u',
-    'a5': 'u',
+    'a5': 'u', //a5 == "Others" => check a5ii
+    'a5ii': 'u',
     'a6': 'u',
     'a7': 'u',
-    'a8': 'u',
-    'a9': 'u',
+    'a8': 'u', //a8 == "working" => check a8i elif (a8 == "school") check a8ii
+    'a8i': 'u',
+    'a8ii': 'u',
+    'a9':
+        'u', //a9 =="married" => check a9i elif (a9 == "widow/widower") check a9ii
+    'a9i': 'u',
+    'a9ii': 'u',
     'a10': 'u',
     'a11a': 'u',
     'a11b': 'u',
@@ -57,8 +64,11 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
     'b1fii': 'n',
     'b2': 'u',
     'b3a': 'u',
+
     'b3b': 'u',
+    'b3bi': 'u', // if b3b yes
     'b4': 'u',
+    'b4i': 'u', //if b4 yes
     'c1': 'u',
     'd1a': 'u',
     'd1b': 'u',
@@ -75,6 +85,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
     'f1b': 'u',
     'f1c': 'u',
     'f1d': 'u',
+    'f1di': 'u', // if f1d yes
     'f2a': 'u',
     'f2b': 'u',
     'f3': 'u',
@@ -93,6 +104,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
     'g1b': 'u',
     'g1c': 'u',
     'g1d': 'u',
+    'g1di': 'u', //if g1d yes
     'h1a': 'u',
     'h1b': 'u',
     'h1c': 'u',
@@ -125,7 +137,6 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
 
   changeValues(name, value) {
     values[name] = value;
-    print(values['f6']);
   }
 
   @override
@@ -141,50 +152,100 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
       {
         {
           "text": "Full Name",
-          "child": FormBuilderTextField(
-            name: 'fullname',
-            onChanged: (value) {
-              changeValues("a1", value);
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.only(left: 10),
-            ),
-          )
+          "child": MyTextField(name: 'a1', callback: changeValues)
         },
         {
           "text": "Gender",
-          "child": singleyesorno(name: "a2", callback: changeValues)
+          "child": FormBuilderRadioGroup(
+              onChanged: (value) {
+                changeValues("a2", value);
+              },
+              validator: (value) {
+                if (value != 'Male' && value != 'Female') {
+                  return 'Required';
+                }
+              },
+              name: "a2",
+              wrapAlignment: WrapAlignment.start,
+              wrapSpacing: 50,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              options: <FormBuilderFieldOption>[
+                FormBuilderFieldOption(
+                  value: 'Male',
+                ),
+                FormBuilderFieldOption(
+                  value: 'Female',
+                )
+              ]),
         },
         {
           "text": "Date of Birth",
-          "child": FormBuilderTextField(
-            name: 'dob',
-            onChanged: (value) {
-              changeValues("a3", value);
-            },
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.only(left: 10),
-                hintText: "DD/MM/YYYY"),
+          "child": MyTextField(
+            name: 'a3',
+            callback: changeValues,
+            hinttext: 'DD/MM/YYYY',
           )
         },
         {
           "text": "IC / Passport Number",
-          "child": FormBuilderTextField(
-            onChanged: (value) {
-              changeValues("a4", value);
-            },
-            name: 'ic',
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.only(left: 10),
-            ),
+          "child": MyTextField(
+            name: 'a4',
+            callback: changeValues,
           )
         },
         {
           "text": "Citizenship",
-          "child": singleyesorno(name: "a5", callback: changeValues)
+          "child": Column(
+            children: [
+              FormBuilderRadioGroup(
+                  onChanged: (value) {
+                    changeValues("a5", value);
+                  },
+                  validator: (value) {
+                    if (values['a5'] == "u") {
+                      return 'Required';
+                    }
+                  },
+                  name: "a5",
+                  wrapAlignment: WrapAlignment.start,
+                  wrapSpacing: 100,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  options: <FormBuilderFieldOption>[
+                    FormBuilderFieldOption(
+                      value: 'Malaysia',
+                    ),
+                    FormBuilderFieldOption(
+                      value: 'Other',
+                      child: SizedBox(
+                        width: 200,
+                        child: FormBuilderTextField(
+                          onChanged: (value) {
+                            changeValues("a5ii", value);
+                          },
+                          validator: (value) {
+                            if (values['a5'] == 'Other' &&
+                                (values['a5ii'] == 'u' ||
+                                    values['a5ii'] == '')) {
+                              return 'Required';
+                            }
+                          },
+                          style: TextStyle(fontSize: 14),
+                          name: '',
+                          decoration: InputDecoration(
+                            hintText: "Others (Please state)",
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(left: 10),
+                          ),
+                        ),
+                      ),
+                    )
+                  ]),
+            ],
+          )
         },
         {
           "text": "Race",
@@ -192,9 +253,14 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
               onChanged: (value) {
                 changeValues("a6", value);
               },
+              validator: (value) {
+                if (value == null) {
+                  return 'Required';
+                }
+              },
               name: "a6",
               wrapAlignment: WrapAlignment.start,
-              wrapSpacing: 50,
+              wrapSpacing: 100,
               decoration: InputDecoration(
                 border: InputBorder.none,
               ),
@@ -225,6 +291,11 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         {
           "text": "Level of Education",
           "child": FormBuilderRadioGroup(
+              validator: (value) {
+                if (value == null) {
+                  return 'Required';
+                }
+              },
               onChanged: (value) {
                 changeValues("a7", value);
               },
@@ -255,20 +326,84 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
               onChanged: (value) {
                 changeValues("a8", value);
               },
+              validator: (value) {
+                if (values['a8'] == 'u') {
+                  return 'Required';
+                }
+              },
               name: "a8",
               wrapAlignment: WrapAlignment.start,
               wrapRunAlignment: WrapAlignment.start,
               wrapSpacing: 300,
+              wrapRunSpacing: 10,
               decoration: InputDecoration(
                 border: InputBorder.none,
               ),
               options: <FormBuilderFieldOption>[
                 FormBuilderFieldOption(
-                  value: 'Working, at',
-                ),
+                    value: 'working',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Working, at: "),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: FormBuilderTextField(
+                            validator: (value) {
+                              if (values['a8'] == 'working' &&
+                                  (values['a8i'] == 'u' ||
+                                      values['a8i'] == '')) {
+                                return 'Required';
+                              }
+                            },
+                            onChanged: (value) {
+                              changeValues("a8i", value);
+                            },
+                            style: TextStyle(fontSize: 14),
+                            name: '',
+                            decoration: InputDecoration(
+                              hintText: "Your workplace",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
                 FormBuilderFieldOption(
-                  value: 'Still studying, at',
-                ),
+                    value: 'studying',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Still studying, at: "),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: FormBuilderTextField(
+                            onChanged: (value) {
+                              changeValues("a8ii", value);
+                            },
+                            validator: (value) {
+                              if (values['a8'] == 'studying' &&
+                                  (values['a8ii'] == 'u' ||
+                                      values['a8ii'] == '')) {
+                                return 'Required';
+                              }
+                            },
+                            style: TextStyle(fontSize: 14),
+                            name: '',
+                            decoration: InputDecoration(
+                              hintText: "Your school",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
                 FormBuilderFieldOption(
                   value: 'Not working',
                 ),
@@ -284,6 +419,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
               wrapAlignment: WrapAlignment.start,
               wrapRunAlignment: WrapAlignment.start,
               wrapSpacing: 300,
+              wrapRunSpacing: 10,
               decoration: InputDecoration(
                 border: InputBorder.none,
               ),
@@ -292,24 +428,76 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                   value: 'Single',
                 ),
                 FormBuilderFieldOption(
-                  value: 'Married, no. of children:',
-                ),
+                    value: 'married',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Married, no. of children: "),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: FormBuilderTextField(
+                            validator: (value) {
+                              if (values['a9'] == 'married' &&
+                                  (values['a9i'] == 'u' ||
+                                      values['a9i'] == '')) {
+                                return 'Required';
+                              }
+                            },
+                            onChanged: (value) {
+                              changeValues("a9i", value);
+                            },
+                            style: TextStyle(fontSize: 14),
+                            name: '',
+                            decoration: InputDecoration(
+                              hintText: "No. of children",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
                 FormBuilderFieldOption(
-                  value: 'Widow/widower, no. of children:',
-                ),
+                    value: 'widow',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Widow/widower, no. of children: "),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: FormBuilderTextField(
+                            validator: (value) {
+                              if (values['a9'] == 'widow' &&
+                                  (values['a9ii'] == 'u' ||
+                                      values['a9ii'] == '')) {
+                                return 'Required';
+                              }
+                            },
+                            onChanged: (value) {
+                              changeValues("a9ii", value);
+                            },
+                            style: TextStyle(fontSize: 14),
+                            name: '',
+                            decoration: InputDecoration(
+                              hintText: "No. of children",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
               ]),
         },
         {
           "text": "Home address",
-          "child": FormBuilderTextField(
-            name: 'address',
-            onChanged: (value) {
-              changeValues("a10", value);
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.only(left: 10),
-            ),
+          "child": MyTextField(
+            name: 'a10',
+            callback: changeValues,
           )
         },
         {
@@ -317,62 +505,54 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
           "child": Row(
             children: [
               Expanded(
-                flex: 8,
-                child: FormBuilderTextField(
-                  name: 'homephoneno',
-                  onChanged: (value) {
-                    changeValues("a11a", value);
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(left: 10),
-                      labelText: "Home"),
-                ),
-              ),
+                  flex: 8,
+                  child: MyTextField(
+                    name: 'a11a',
+                    callback: changeValues,
+                    hinttext: 'Home',
+                  )),
               Expanded(
                 flex: 1,
                 child: SizedBox(),
               ),
               Expanded(
-                flex: 8,
-                child: FormBuilderTextField(
-                  name: 'mobilephoneno',
-                  onChanged: (value) {
-                    changeValues("a11b", value);
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(left: 10),
-                      labelText: "Mobile"),
-                ),
-              ),
+                  flex: 8,
+                  child: MyTextField(
+                    name: 'a11b',
+                    callback: changeValues,
+                    hinttext: 'Mobile',
+                  )),
             ],
           )
         },
         {
           "text": "Email",
-          "child": FormBuilderTextField(
-            name: 'email',
-            onChanged: (value) {
-              changeValues("a12", value);
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.only(left: 10),
-            ),
+          "child": MyTextField(
+            name: 'a12',
+            callback: changeValues,
+            hinttext: 'e.g. johndoe@gmail.com',
           )
         },
         {
           "text": "Last Normal Menstrual Period (Female only)",
           "child": FormBuilderTextField(
-            name: 'menstrual',
-            onChanged: (value) {
-              changeValues("a13", value);
+            name: 'a13',
+            validator: (value) {
+              if (value == null && values['a2'] == "Female") {
+                return 'Required';
+              }
             },
+            onSaved: (value) {
+              setState(() {
+                changeValues('a13', value);
+              });
+            },
+            style: TextStyle(fontSize: 14),
             decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.only(left: 10),
-                hintText: "DD/MM/YYYY"),
+              hintText: 'DD/MM/YYYY',
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.only(left: 10),
+            ),
           )
         },
       }.toSet(),
@@ -726,11 +906,58 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 text: "...gone through any form of surgery?",
                 name: "b3b",
                 callback: changeValues),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    child: FormBuilderTextField(
+                      onChanged: (value) {
+                        changeValues("b3bi", value);
+                      },
+                      validator: (value) {
+                        if (values['b3b'] != 'n') {
+                          return 'Required';
+                        }
+                      },
+                      style: TextStyle(fontSize: 14),
+                      name: '',
+                      decoration: InputDecoration(
+                          hintText: "If yes, please state...",
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.only(left: 10)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ])
         },
         {
           "text": "Are you suffering from any other diseases?",
-          "child": singleyesorno(name: "b4", callback: changeValues)
+          "child": Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              singleyesorno(name: "b4", callback: changeValues),
+              SizedBox(
+                width: 200,
+                height: 30,
+                child: FormBuilderTextField(
+                  onChanged: (value) {
+                    changeValues("b4i", value);
+                  },
+                  style: TextStyle(fontSize: 14),
+                  name: '',
+                  decoration: InputDecoration(
+                      hintText: "If yes, please state...",
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(left: 10)),
+                ),
+              ),
+            ],
+          )
         },
       }.toSet(),
       {
@@ -796,8 +1023,14 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                       onChanged: (value) {
                         changeValues("d3", value);
                       },
+                      validator: (value) {
+                        if (value == "u") {
+                          return 'Required';
+                        }
+                      },
                       name: "s",
-                      wrapAlignment: WrapAlignment.spaceBetween,
+                      wrapAlignment: WrapAlignment.start,
+                      wrapSpacing: 50,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                       ),
@@ -855,6 +1088,29 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 text: "Other problems on private parts",
                 name: "f1d",
                 callback: changeValues),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 30,
+                    child: FormBuilderTextField(
+                      onChanged: (value) {
+                        changeValues("f1di", value);
+                      },
+                      style: TextStyle(fontSize: 14),
+                      name: '',
+                      decoration: InputDecoration(
+                          hintText: "If yes, please state...",
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.only(left: 10)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ])
         },
         {
@@ -940,15 +1196,19 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         },
         {
           "text": "Menarche (Period for the first time)",
-          "child": FormBuilderTextField(
-            name: 'menarche',
-            onChanged: (value) {
-              changeValues("f12", value);
-            },
-            decoration: InputDecoration(
-              hintText: "Date / Year",
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.only(left: 10),
+          "child": SizedBox(
+            height: 40,
+            child: FormBuilderTextField(
+              name: 'menarche',
+              onChanged: (value) {
+                changeValues("f12", value);
+              },
+              style: TextStyle(fontSize: 14),
+              decoration: InputDecoration(
+                hintText: "Date / Year",
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.only(left: 10),
+              ),
             ),
           )
         },
@@ -975,6 +1235,29 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 text: "Other substances or medicine",
                 name: "g1d",
                 callback: changeValues),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 30,
+                    child: FormBuilderTextField(
+                      onChanged: (value) {
+                        changeValues("g1di", value);
+                      },
+                      style: TextStyle(fontSize: 14),
+                      name: '',
+                      decoration: InputDecoration(
+                          hintText: "If yes, please state...",
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.only(left: 10)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ])
         },
       }.toSet(),
@@ -1153,7 +1436,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 callback: changeValues),
             ListQuestion(
                 index: 7,
-                text: "Had to thought to end life",
+                text: "Had the thought to end life",
                 name: "j3g",
                 callback: changeValues),
           ])
@@ -1167,7 +1450,8 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         },
       }.toSet(),
     ];
-
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd \n h:mm:ss a').format(now);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -1190,282 +1474,325 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         ),
         body: TabBarView(
           children: [
-            Placeholder(),
+            const Placeholder(),
             Padding(
               padding: const EdgeInsets.only(
                 top: 30,
               ),
-              child: section < 11
-                  ? ListView(
-                      controller: listScrollController,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.1,
-                              right: MediaQuery.of(context).size.width * 0.1),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+              child: section < TCABSSKPage.title.length
+                  ? Form(
+                      key: _formKey,
+                      child: ListView(
+                        controller: listScrollController,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.1,
+                                right: MediaQuery.of(context).size.width * 0.1),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontFamily: "LeagueSpartan",
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                          color: Colors.black),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text:
+                                                "This form consists of 11 sections "),
+                                        TextSpan(
+                                            text: "(A - K).",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold))
+                                      ]),
+                                ),
+                                Text(
+                                  "Please fill in your information in each section accordingly.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "LeagueSpartan",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Column(
                             children: [
-                              RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontFamily: "LeagueSpartan",
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                        color: Colors.black),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text:
-                                              "This form consists of 11 sections "),
-                                      TextSpan(
-                                          text: "(A - K).",
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold))
-                                    ]),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.02,
+                                    right: MediaQuery.of(context).size.width *
+                                        0.02),
+                                child: Stack(
+                                  alignment: Alignment.topCenter,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 15, left: 4, right: 4),
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: Color(0xffd9d9d9),
+                                                  width: 3)),
+                                          padding: const EdgeInsets.all(8),
+                                          child: Container(
+                                            padding: EdgeInsets.only(
+                                                top: 30, left: 10, right: 20),
+                                            child: ListView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                itemCount:
+                                                    questions[section].length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: 24,
+                                                            child: Text(
+                                                                "${index + 1})"),
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(questions[
+                                                                        section]
+                                                                    .elementAt(
+                                                                        index)[
+                                                                'text']),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 15),
+                                                        child: questions[
+                                                                section]
+                                                            .elementAt(
+                                                                index)['child'],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                    ],
+                                                  );
+                                                }),
+                                          )),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFededeb),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: Text(TCABSSKPage.title[section]),
+                                    )
+                                  ],
+                                ),
                               ),
-                              Text(
-                                "Please fill in your information in each section accordingly.",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontFamily: "LeagueSpartan",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                    color: Colors.black),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 20,
+                                    left:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    right: MediaQuery.of(context).size.width *
+                                        0.1),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      height: 40,
+                                      width: 120,
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        fit: StackFit.expand,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                                border: Border.all(
+                                                    color: Colors.grey)),
+                                          ),
+                                          Material(
+                                            color: Colors.transparent,
+                                            child: InkWell(
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
+                                              onTap: () {
+                                                if (listScrollController
+                                                    .hasClients) {
+                                                  final position =
+                                                      listScrollController
+                                                          .position
+                                                          .minScrollExtent;
+                                                  listScrollController
+                                                      .animateTo(
+                                                    position,
+                                                    duration:
+                                                        Duration(seconds: 1),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                }
+                                                if (!_formKey.currentState!
+                                                    .validate()) {
+                                                  return;
+                                                }
+
+                                                _formKey.currentState!.save();
+                                                ;
+                                                setState(() {
+                                                  section += 1;
+                                                  print(values);
+                                                });
+                                              },
+                                              child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        section == 10
+                                                            ? "Submit"
+                                                            : "Next",
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                "LeagueSpartan",
+                                                            fontSize: 16,
+                                                            color: Colors.grey),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 20,
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        size: 10.0,
+                                                        color: Color.fromARGB(
+                                                            255, 150, 111, 214),
+                                                      ),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.02,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.02),
-                                  child: Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 15, left: 4, right: 4),
-                                        child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                    color: Color(0xffd9d9d9),
-                                                    width: 3)),
-                                            padding: const EdgeInsets.all(8),
-                                            child: Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 30, left: 10, right: 20),
-                                              child: ListView.builder(
-                                                  shrinkWrap: true,
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  itemCount:
-                                                      questions[section].length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return Column(
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: 24,
-                                                              child: Text(
-                                                                  "${index + 1})"),
-                                                            ),
-                                                            Expanded(
-                                                              child: Text(questions[
-                                                                          section]
-                                                                      .elementAt(
-                                                                          index)[
-                                                                  'text']),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 15),
-                                                          child: questions[
-                                                                      section]
-                                                                  .elementAt(
-                                                                      index)[
-                                                              'child'],
-                                                        ),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                      ],
-                                                    );
-                                                  }),
-                                            )),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        padding: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFededeb),
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: Text(TCABSSKPage.title[section]),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20,
-                                      left: MediaQuery.of(context).size.width *
-                                          0.1,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.1),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        width: 120,
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          fit: StackFit.expand,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(40),
-                                                  border: Border.all(
-                                                      color: Colors.grey)),
-                                            ),
-                                            Material(
-                                              color: Colors.transparent,
-                                              child: InkWell(
-                                                borderRadius:
-                                                    BorderRadius.circular(40),
-                                                onTap: () {
-                                                  if (listScrollController
-                                                      .hasClients) {
-                                                    final position =
-                                                        listScrollController
-                                                            .position
-                                                            .minScrollExtent;
-                                                    listScrollController
-                                                        .animateTo(
-                                                      position,
-                                                      duration:
-                                                          Duration(seconds: 1),
-                                                      curve: Curves.easeInOut,
-                                                    );
-                                                  }
-                                                  ;
-                                                  setState(() {
-                                                    section += 1;
-                                                  });
-                                                },
-                                                child: const Align(
-                                                    alignment: Alignment.center,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          "Next",
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  "LeagueSpartan",
-                                                              fontSize: 16,
-                                                              color:
-                                                                  Colors.grey),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 20,
-                                                        ),
-                                                        Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          size: 10.0,
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              150,
-                                                              111,
-                                                              214),
-                                                        ),
-                                                      ],
-                                                    )),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )),
-                        SizedBox(
-                          height: 30,
-                        ),
-                      ],
+                          SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
                     )
                   : Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.1,
                           right: MediaQuery.of(context).size.width * 0.1),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Your response has been recorded.",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: "LeagueSpartan",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Colors.black),
-                          ),
-                          Text(
-                            "Thanks for filling up the form!",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: "LeagueSpartan",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Colors.black),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 2.0, color: Color(0xffd9d9d9)),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "lib/assets/images/thumbsup.png",
+                                  width: 200,
+                                  height: 200,
+                                ),
+                                Text(
+                                  "Your response on",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "LeagueSpartan",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 10),
+                                  child: Text(
+                                    formattedDate,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: "Poppins",
+                                        fontSize: 20,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                                Text(
+                                  "has been recorded.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "LeagueSpartan",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Thanks for filling up the form!",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "LeagueSpartan",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
-                            height: 30,
+                            height: 20,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 height: 40,
-                                width: 120,
+                                width: 150,
                                 child: Stack(
                                   alignment: Alignment.center,
                                   fit: StackFit.expand,
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(40),
-                                          border:
-                                              Border.all(color: Colors.purple)),
+                                        borderRadius: BorderRadius.circular(40),
+                                        color: Color(0xff966fd6),
+                                      ),
                                     ),
                                     Material(
                                       color: Colors.transparent,
@@ -1499,7 +1826,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                                       fontFamily:
                                                           "LeagueSpartan",
                                                       fontSize: 16,
-                                                      color: Colors.purple),
+                                                      color: Colors.white),
                                                 ),
                                               ],
                                             )),
