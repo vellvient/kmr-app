@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 //tsssst
 class VerificationPage extends StatefulWidget {
   final String verificationId;
 
-  const VerificationPage({Key? key, required this.verificationId}) : super(key: key);
+  const VerificationPage({Key? key, required this.verificationId})
+      : super(key: key);
 
   @override
   _VerificationPageState createState() => _VerificationPageState();
@@ -39,11 +41,15 @@ class _VerificationPageState extends State<VerificationPage> {
                   String verificationCode = codeController.text.trim();
                   try {
                     // Create a PhoneAuthCredential with the verification code
-                    PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: widget.verificationId, smsCode: verificationCode);
+                    PhoneAuthCredential credential =
+                        PhoneAuthProvider.credential(
+                            verificationId: widget.verificationId,
+                            smsCode: verificationCode);
                     // Sign in the user with the credential
-                    await FirebaseAuth.instance.signInWithCredential(credential);
+                    await FirebaseAuth.instance
+                        .signInWithCredential(credential);
                     // If successful, navigate to home page or any other desired page
-                    Navigator.pushReplacementNamed(context, '/home');
+                    Navigator.pushReplacementNamed(context, '/root');
                   } catch (e) {
                     // Handle errors, e.g., invalid verification code
                     print('Verification failed: $e');

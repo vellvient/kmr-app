@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kmrapp/screens/login.dart';
-import 'package:kmrapp/screens/login_admin.dart';
-import 'package:kmrapp/screens/register_admin.dart';
 import 'package:kmrapp/screens/home_page.dart';
+import 'package:kmrapp/screens/root.dart';
 import 'package:kmrapp/screens/verification_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-
-
-
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key});
@@ -56,12 +51,11 @@ class RegisterPage extends StatelessWidget {
         //can change this
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()), //destination
+          MaterialPageRoute(builder: (context) => RootPage()), //destination
         );
       } catch (e) {
         // if fail
         print('Failed to register user: $e');
-
       }
     }
 
@@ -186,24 +180,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 30,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Admin?',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const AdminRegisterPage()),
-                          );
-                        },
-                        child: Text('Register here'))
-                  ],
                 ),
                 Row(
                   children: [

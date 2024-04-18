@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:kmrapp/screens/location.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

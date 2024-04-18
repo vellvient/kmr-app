@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kmrapp/screens/home_page.dart';
-import 'package:kmrapp/screens/login_admin.dart';
 import 'package:kmrapp/screens/register.dart';
 import 'package:kmrapp/screens/root.dart';
 
@@ -79,23 +78,6 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 30,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Admin?',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AdminLoginPage()),
-                          );
-                        },
-                        child: Text('Log in here'))
-                  ],
                 ),
                 Row(
                   children: [

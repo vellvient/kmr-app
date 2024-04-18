@@ -20,7 +20,7 @@ class OnboardingScreen extends StatelessWidget {
               height: 350,
             ),
             Text(
-              'Consult, only with a doctor you trsut!',
+              'Consult, only with a doctor you trust!',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 35,
