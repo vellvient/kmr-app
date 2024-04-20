@@ -1,10 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/register.dart';
 import 'package:kmrapp/screens/root.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  void loginUser() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RootPage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +87,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     labelText: 'Email',
                   ),
+                  controller: emailController,
                 ),
                 SizedBox(
                   height: 30,
@@ -75,6 +99,7 @@ class LoginPage extends StatelessWidget {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50)),
                       labelText: 'Password'),
+                  controller: passwordController,
                 ),
                 SizedBox(
                   height: 30,
@@ -110,11 +135,7 @@ class LoginPage extends StatelessWidget {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(50),
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RootPage()),
-                              );
+                              loginUser();
                             },
                             child: Container(
                                 padding: EdgeInsets.symmetric(
