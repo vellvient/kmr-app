@@ -9,14 +9,14 @@ import 'package:kmrapp/screens/tcabskk_page.dart';
 import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/location.dart';
 
-class RootPage extends StatefulWidget {
-  const RootPage({super.key});
+class ADMINRootPage extends StatefulWidget {
+  const ADMINRootPage({super.key});
 
   @override
-  State<RootPage> createState() => _RootPageState();
+  State<ADMINRootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _RootPageState extends State<ADMINRootPage> {
   final user = FirebaseAuth.instance.currentUser!;
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserInfo() async {
@@ -27,7 +27,7 @@ class _RootPageState extends State<RootPage> {
     return snapshot;
   }
 
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -38,14 +38,11 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      HomePage(),
-      BMIPage(),
-      HomePage(),
-      TCABSSKPage(),
+      ADMINHomePage(),
       ProfilePage(),
-      // other pages here, replace duplicate later
     ];
     var page = widgetOptions.elementAt(_selectedIndex);
+    const admin = true;
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
       future: getUserInfo(),
       builder: (context, snapshot) {
@@ -54,16 +51,16 @@ class _RootPageState extends State<RootPage> {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
             return Scaffold(
-              appBar: _selectedIndex == 2
+              appBar: _selectedIndex == 0
                   ? AppBar(
                       automaticallyImplyLeading: false,
-                      toolbarHeight: 320,
+                      toolbarHeight: 280,
                       titleSpacing: 0,
                       centerTitle: true,
                       title: Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
                         width: double.infinity,
-                        height: 320,
+                        height: 280,
                         decoration: const BoxDecoration(
                             color: Color(0xffDFCEFA),
                             borderRadius: BorderRadius.only(
@@ -80,30 +77,8 @@ class _RootPageState extends State<RootPage> {
                               width: 150,
                               height: 150,
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LocationPage()),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: 75,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Reach Us',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 10),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff966FD6),
-                                      borderRadius: BorderRadius.circular(10)),
-                                )),
                             Text(
-                              'Hi, ' + data['fullName'] + '!',
+                              'Admin',
                               style: TextStyle(
                                   fontSize: 40,
                                   fontWeight: FontWeight.bold,
@@ -149,13 +124,7 @@ class _RootPageState extends State<RootPage> {
                                   ),
                                 ),
                                 Text(
-                                  _selectedIndex == 0
-                                      ? 'Kajian Kepuasan'
-                                      : _selectedIndex == 1
-                                          ? 'BMI Calculator'
-                                          : _selectedIndex == 3
-                                              ? 'TCA / BSSK'
-                                              : 'Profile',
+                                  'Profile',
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -182,15 +151,7 @@ class _RootPageState extends State<RootPage> {
                     showUnselectedLabels: false,
                     items: <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
-                          icon: Icon(Ionicons.thumbs_up_outline),
-                          label: 'Review'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Ionicons.scale_outline), label: 'BMI'),
-                      BottomNavigationBarItem(
                           icon: Icon(Ionicons.home_outline), label: 'Home'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Ionicons.document_text_outline),
-                          label: 'TCA & BSSK'),
                       BottomNavigationBarItem(
                           icon: Icon(Ionicons.person_outline), label: 'Profile')
                     ],
