@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:kmrapp/screens/tca_appointment_page.dart';
 import 'material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
 class TCABSSKPage extends StatefulWidget {
-  const TCABSSKPage({super.key});
+  TCABSSKPage({super.key});
   static final List<String> title = [
     "A. Biodata",
     "B. Medical/Surgical History",
@@ -568,7 +571,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                             style: TextStyle(fontSize: 10),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 15),
+                            padding: EdgeInsets.only(right: 15),
                             child: Text(
                               "Family",
                               style: TextStyle(fontSize: 10),
@@ -579,11 +582,11 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 3),
+                      padding: EdgeInsets.only(right: 3),
                       child: Text("a."),
                     ),
                     Expanded(flex: 11, child: Text("Hypertension")),
@@ -618,12 +621,12 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 5, bottom: 5),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 3),
+                        padding: EdgeInsets.only(right: 3),
                         child: Text("b."),
                       ),
                       Expanded(flex: 11, child: Text("Diabetes")),
@@ -654,11 +657,11 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 3),
+                      padding: EdgeInsets.only(right: 3),
                       child: Text("c."),
                     ),
                     Expanded(flex: 11, child: Text("Heart Disease")),
@@ -693,12 +696,12 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 5, bottom: 5),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 3),
+                        padding: EdgeInsets.only(right: 3),
                         child: Text("d."),
                       ),
                       Expanded(flex: 11, child: Text("Asthma")),
@@ -729,11 +732,11 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 3),
+                      padding: EdgeInsets.only(right: 3),
                       child: Text("e."),
                     ),
                     Expanded(
@@ -770,12 +773,12 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 5, bottom: 5),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 3),
+                        padding: EdgeInsets.only(right: 3),
                         child: Text("f."),
                       ),
                       Expanded(
@@ -819,7 +822,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         {
           "text": "Have you ever...",
           "child": Column(children: [
-            const yesno(),
+            yesno(),
             ListQuestion(
                 index: 1,
                 text: "...experienced a severe drug allergy?",
@@ -831,7 +834,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 name: "b3b",
                 callback: changeValues),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -901,7 +904,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
           "text":
               "I eat according to the set eating time period below every day:",
           "child": Column(children: [
-            const yesno(),
+            yesno(),
             ListQuestion(
                 index: 1,
                 text: "Breakfast",
@@ -916,7 +919,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         {
           "text": "Do you consume all kinds of food including:",
           "child": Column(children: [
-            const yesno(),
+            yesno(),
             ListQuestion(
                 index: 1,
                 text: "Grain food (e.g. rice, noodles or bread)",
@@ -1019,7 +1022,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 name: "f1d",
                 callback: changeValues),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -1051,7 +1054,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         {
           "text": "I have done the following:",
           "child": Column(children: [
-            const yesno(),
+            yesno(),
             ListQuestion(
                 index: 1,
                 text: "Consumed pornographic material",
@@ -1083,10 +1086,10 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         {
           "text": "I:",
           "child": Column(children: [
-            const yesno(),
+            yesno(),
             ListQuestion(
                 index: 1,
-                text: "Constantly change partners",
+                text: "antly change partners",
                 name: "f7a",
                 callback: changeValues),
             ListQuestion(
@@ -1171,7 +1174,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 name: "g1d",
                 callback: changeValues),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -1415,9 +1418,461 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
         ),
         body: TabBarView(
           children: [
-            const Placeholder(),
             Padding(
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
+                top: 30,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'Recommended for You!',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFC7E9E6),
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/images/profile.png',
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                    SizedBox(width: 15.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Dr. Ahmad Lee',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '3 years++ experience in...',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TCAAppointmentPage()),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Ionicons.chevron_forward_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFC7E9E6),
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/images/profile.png',
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                    SizedBox(width: 15.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Dr. Ahmad Lee II',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '3 years++ experience in...',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TCAAppointmentPage()),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Ionicons.chevron_forward_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                  children: <TextSpan>[
+                                    TextSpan(text: 'Based on your previous '),
+                                    TextSpan(
+                                      text: 'BSSK results',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
+                                    ),
+                                    TextSpan(text: ', it looks like our '),
+                                    TextSpan(
+                                      text: 'Occupational Therapist',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                        text:
+                                            ' will be the best option for you.'),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                'Counsellor',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFC7E9E6),
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/images/profile.png',
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                    SizedBox(width: 15.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Dr. Ahmad Lee',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '3 years++ experience in...',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TCAAppointmentPage()),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Ionicons.chevron_forward_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFC7E9E6),
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/images/profile.png',
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                    SizedBox(width: 15.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Dr. Ahmad Lee II',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '3 years++ experience in...',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TCAAppointmentPage()),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Ionicons.chevron_forward_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                'Medical Officer',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFC7E9E6),
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/images/profile.png',
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                    SizedBox(width: 15.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Dr. Ahmad Lee',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '3 years++ experience in...',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TCAAppointmentPage()),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Ionicons.chevron_forward_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFC7E9E6),
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/images/profile.png',
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                    SizedBox(width: 15.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Dr. Ahmad Lee II',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '3 years++ experience in...',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TCAAppointmentPage()),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Ionicons.chevron_forward_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
                 top: 30,
               ),
               child: section < TCABSSKPage.title.length
@@ -1447,7 +1902,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                                 "This form consists of 11 sections "),
                                         TextSpan(
                                             text: "(A - K).",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.bold))
                                       ]),
                                 ),
@@ -1478,7 +1933,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                   alignment: Alignment.topCenter,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(
+                                      padding: EdgeInsets.only(
                                           top: 15, left: 4, right: 4),
                                       child: Container(
                                           decoration: BoxDecoration(
@@ -1487,14 +1942,14 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                               border: Border.all(
                                                   color: Color(0xffd9d9d9),
                                                   width: 3)),
-                                          padding: const EdgeInsets.all(8),
+                                          padding: EdgeInsets.all(8),
                                           child: Container(
                                             padding: EdgeInsets.only(
                                                 top: 30, left: 10, right: 20),
                                             child: ListView.builder(
                                                 shrinkWrap: true,
                                                 physics:
-                                                    const NeverScrollableScrollPhysics(),
+                                                    NeverScrollableScrollPhysics(),
                                                 itemCount:
                                                     questions[section].length,
                                                 itemBuilder:
@@ -1690,8 +2145,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                       color: Colors.black),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 10),
+                                  padding: EdgeInsets.only(top: 10, bottom: 10),
                                   child: Text(
                                     formattedDate,
                                     textAlign: TextAlign.center,
@@ -1765,7 +2219,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                             section = 0;
                                           });
                                         },
-                                        child: const Align(
+                                        child: Align(
                                             alignment: Alignment.center,
                                             child: Row(
                                               mainAxisAlignment:
@@ -1800,7 +2254,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
 }
 
 class yesno extends StatelessWidget {
-  const yesno({
+  yesno({
     super.key,
   });
 
@@ -1818,11 +2272,11 @@ class yesno extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.only(right: 10),
                   child: Text("Yes"),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: EdgeInsets.only(right: 15),
                   child: Text("No"),
                 )
               ],
