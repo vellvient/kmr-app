@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +28,7 @@ class TCABSSKPage extends StatefulWidget {
 class _TCABSSKPageState extends State<TCABSSKPage> {
   final user = FirebaseAuth.instance.currentUser!;
 
-  int section = 0;
+  int section = 1;
   ScrollController listScrollController = ScrollController();
 
   Map<String, dynamic> values = {
@@ -54,18 +52,12 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
     'a11b': 'u',
     'a12': 'u',
     'a13': 'u',
-    'b1ai': 'n',
-    'b1aii': 'n',
-    'b1bi': 'n',
-    'b1bii': 'n',
-    'b1ci': 'n',
-    'b1cii': 'n',
-    'b1di': 'n',
-    'b1dii': 'n',
-    'b1ei': 'n',
-    'b1eii': 'n',
-    'b1fi': 'n',
-    'b1fii': 'n',
+    'b1a': [],
+    'b1b': [],
+    'b1c': [],
+    'b1d': [],
+    'b1e': [],
+    'b1f': [],
     'b2': 'u',
     'b3a': 'u',
 
@@ -120,14 +112,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
     'h2e': 'u',
     'h2f': 'u',
     'i1': 'u',
-    'j1a': 'u',
-    'j1b': 'u',
-    'j1c': 'u',
-    'j1d': 'u',
-    'j1e': 'u',
-    'j1f': 'u',
-    'j1g': 'u',
-    'j1h': 'u',
+    'j1': [],
     'j2': 'u',
     'j3a': 'u',
     'j3b': 'u',
@@ -141,6 +126,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
 
   changeValues(name, value) {
     values[name] = value;
+    print(values[name]);
   }
 
   @override
@@ -605,18 +591,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                       flex: 7,
                       child: FormBuilderCheckboxGroup(
                           onChanged: (value) {
-                            String first = "b1ai";
-                            String second = "b1aii";
-                            if (value!.contains(first)) {
-                              changeValues(first, "y");
-                            } else {
-                              changeValues(first, "n");
-                            }
-                            if (value.contains(second)) {
-                              changeValues(second, "y");
-                            } else {
-                              changeValues(second, "n");
-                            }
+                            changeValues('b1a', value);
                           },
                           name: "s",
                           wrapAlignment: WrapAlignment.spaceAround,
@@ -656,18 +631,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                         flex: 7,
                         child: FormBuilderCheckboxGroup(
                             onChanged: (value) {
-                              String first = "b1bi";
-                              String second = "b1bii";
-                              if (value!.contains(first)) {
-                                changeValues(first, "y");
-                              } else {
-                                changeValues(first, "n");
-                              }
-                              if (value.contains(second)) {
-                                changeValues(second, "y");
-                              } else {
-                                changeValues(second, "n");
-                              }
+                              changeValues('b1b', value);
                             },
                             name: "s",
                             wrapAlignment: WrapAlignment.spaceAround,
@@ -702,18 +666,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                       flex: 7,
                       child: FormBuilderCheckboxGroup(
                           onChanged: (value) {
-                            String first = "b1ci";
-                            String second = "b1cii";
-                            if (value!.contains(first)) {
-                              changeValues(first, "y");
-                            } else {
-                              changeValues(first, "n");
-                            }
-                            if (value.contains(second)) {
-                              changeValues(second, "y");
-                            } else {
-                              changeValues(second, "n");
-                            }
+                            changeValues('b1c', value);
                           },
                           name: "s",
                           wrapAlignment: WrapAlignment.spaceAround,
@@ -753,18 +706,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                         flex: 7,
                         child: FormBuilderCheckboxGroup(
                             onChanged: (value) {
-                              String first = "b1di";
-                              String second = "b1dii";
-                              if (value!.contains(first)) {
-                                changeValues(first, "y");
-                              } else {
-                                changeValues(first, "n");
-                              }
-                              if (value.contains(second)) {
-                                changeValues(second, "y");
-                              } else {
-                                changeValues(second, "n");
-                              }
+                              changeValues('b1d', value);
                             },
                             name: "s",
                             wrapAlignment: WrapAlignment.spaceAround,
@@ -801,18 +743,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                       flex: 7,
                       child: FormBuilderCheckboxGroup(
                           onChanged: (value) {
-                            String first = "b1ei";
-                            String second = "b1eii";
-                            if (value!.contains(first)) {
-                              changeValues(first, "y");
-                            } else {
-                              changeValues(first, "n");
-                            }
-                            if (value.contains(second)) {
-                              changeValues(second, "y");
-                            } else {
-                              changeValues(second, "n");
-                            }
+                            changeValues('b1e', value);
                           },
                           name: "s",
                           wrapAlignment: WrapAlignment.spaceAround,
@@ -855,18 +786,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                         flex: 7,
                         child: FormBuilderCheckboxGroup(
                             onChanged: (value) {
-                              String first = "b1fi";
-                              String second = "b1fii";
-                              if (value!.contains(first)) {
-                                changeValues(first, "y");
-                              } else {
-                                changeValues(first, "n");
-                              }
-                              if (value.contains(second)) {
-                                changeValues(second, "y");
-                              } else {
-                                changeValues(second, "n");
-                              }
+                              changeValues('b1f', value);
                             },
                             name: "s",
                             wrapAlignment: WrapAlignment.spaceAround,
@@ -922,7 +842,8 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                         changeValues("b3bi", value);
                       },
                       validator: (value) {
-                        if (values['b3b'] != 'n') {
+                        if (values['b3b'] == 'y' &&
+                            (values['b3bi'] == "u" || values['b3bi'] == "")) {
                           return 'Required';
                         }
                       },
@@ -947,10 +868,15 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
               singleyesorno(name: "b4", callback: changeValues),
               SizedBox(
                 width: 200,
-                height: 30,
                 child: FormBuilderTextField(
                   onChanged: (value) {
                     changeValues("b4i", value);
+                  },
+                  validator: (value) {
+                    if (values['b4'] == 'y' &&
+                        (values['b4i'] == "u" || values['b4i'] == "")) {
+                      return 'Required';
+                    }
                   },
                   style: TextStyle(fontSize: 14),
                   name: '',
@@ -1028,7 +954,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                         changeValues("d3", value);
                       },
                       validator: (value) {
-                        if (value == "u") {
+                        if (values['d3'] == "u") {
                           return 'Required';
                         }
                       },
@@ -1099,10 +1025,15 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 children: [
                   SizedBox(
                     width: 150,
-                    height: 30,
                     child: FormBuilderTextField(
                       onChanged: (value) {
                         changeValues("f1di", value);
+                      },
+                      validator: (value) {
+                        if (values['f1d'] == 'y' &&
+                            (values['f1di'] == "u" || values['f1di'] == "")) {
+                          return 'Required';
+                        }
                       },
                       style: TextStyle(fontSize: 14),
                       name: '',
@@ -1185,21 +1116,21 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
           )
         },
         {
-          "text": "I feel that my belly is getting bigger.",
+          "text": "I feel that my belly is getting bigger. (Female only)",
           "child": singleyesorno(
             name: "f10",
             callback: changeValues,
           )
         },
         {
-          "text": "I have experienced miscarriage.",
+          "text": "I have experienced miscarriage. (Female only)",
           "child": singleyesorno(
             name: "f11",
             callback: changeValues,
           )
         },
         {
-          "text": "Menarche (Period for the first time)",
+          "text": "Menarche (Period for the first time) (Female only)",
           "child": SizedBox(
             height: 40,
             child: FormBuilderTextField(
@@ -1246,10 +1177,15 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                 children: [
                   SizedBox(
                     width: 150,
-                    height: 30,
                     child: FormBuilderTextField(
                       onChanged: (value) {
                         changeValues("g1di", value);
+                      },
+                      validator: (value) {
+                        if (values['g1d'] == 'y' &&
+                            (values['g1di'] == "u" || values['g1di'] == "")) {
+                          return 'Required';
+                        }
                       },
                       style: TextStyle(fontSize: 14),
                       name: '',
@@ -1341,23 +1277,24 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
               Expanded(
                 child: FormBuilderCheckboxGroup(
                     onChanged: (value) {
-                      List list = [
-                        "j1a",
-                        "j1b",
-                        "j1c",
-                        "j1d",
-                        "j1e",
-                        "j1f",
-                        "j1g",
-                        "j1h"
-                      ];
-                      for (String item in list) {
-                        if (value!.contains(item)) {
-                          changeValues(item, "y");
-                        } else {
-                          changeValues(item, "n");
-                        }
-                      }
+                      // List list = [
+                      //   "j1a",
+                      //   "j1b",
+                      //   "j1c",
+                      //   "j1d",
+                      //   "j1e",
+                      //   "j1f",
+                      //   "j1g",
+                      //   "j1h"
+                      // ];
+                      // for (String item in list) {
+                      //   if (value!.contains(item)) {
+                      //     changeValues(item, "y");
+                      //   } else {
+                      //     changeValues(item, "n");
+                      //   }
+                      // }
+                      changeValues('j1', value);
                     },
                     name: "j1",
                     decoration: InputDecoration(border: InputBorder.none),
@@ -1675,6 +1612,7 @@ class _TCABSSKPageState extends State<TCABSSKPage> {
                                                     bsskRef.update({
                                                       'BSSK': values,
                                                     });
+                                                    print(values);
                                                   }
                                                 });
                                               },
@@ -1890,6 +1828,192 @@ class yesno extends StatelessWidget {
               ],
             ))
       ],
+    );
+  }
+}
+
+class ListQuestion extends StatefulWidget {
+  const ListQuestion({
+    super.key,
+    required this.index,
+    required this.text,
+    required this.name,
+    required this.callback,
+  });
+  final int index;
+  final String text;
+  final String name;
+  final Function callback;
+
+  @override
+  State<ListQuestion> createState() => _ListQuestionState();
+}
+
+class _ListQuestionState extends State<ListQuestion> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: widget.index % 2 == 0 ? Color(0xFFededeb) : Color(0xFFffffff),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 3),
+              child: Text(widget.index == 1
+                  ? "a."
+                  : widget.index == 2
+                      ? "b."
+                      : widget.index == 3
+                          ? "c."
+                          : widget.index == 4
+                              ? "d."
+                              : widget.index == 5
+                                  ? "e."
+                                  : widget.index == 6
+                                      ? "f."
+                                      : "g."),
+            ),
+            Expanded(flex: 11, child: Text(widget.text)),
+            Expanded(
+              flex: 7,
+              child: FormBuilderRadioGroup(
+                  name: widget.name,
+                  validator: (value) {
+                    if (value != 'y' && value != 'n') {
+                      return 'Required';
+                    }
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      widget.callback(widget.name, value);
+                    });
+                  },
+                  wrapAlignment: WrapAlignment.spaceAround,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  options: <FormBuilderFieldOption>[
+                    FormBuilderFieldOption(
+                      value: 'y',
+                      child: SizedBox(),
+                    ),
+                    FormBuilderFieldOption(
+                      value: 'n',
+                      child: SizedBox(),
+                    ),
+                  ]),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class singleyesorno extends StatefulWidget {
+  singleyesorno({
+    super.key,
+    required this.name,
+    required this.callback,
+    this.enabled = true,
+  });
+  final String name;
+  final Function callback;
+  bool enabled;
+
+  @override
+  State<singleyesorno> createState() => _singleyesornoState();
+}
+
+class _singleyesornoState extends State<singleyesorno> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          width: 150,
+          child: FormBuilderRadioGroup(
+              validator: (value) {
+                if (value != 'y' && value != 'n') {
+                  if (widget.name == 'f8' ||
+                      widget.name == 'f9' ||
+                      widget.name == 'f10' ||
+                      widget.name == 'f11') {
+                  } else {
+                    return 'Required';
+                  }
+                }
+              },
+              onChanged: (value) {
+                setState(() {
+                  widget.callback(widget.name, value);
+                });
+              },
+              name: widget.name,
+              wrapAlignment: WrapAlignment.spaceBetween,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              options: <FormBuilderFieldOption>[
+                FormBuilderFieldOption(
+                  value: 'y',
+                  child: Text("Yes"),
+                ),
+                FormBuilderFieldOption(
+                  value: 'n',
+                  child: Text("No"),
+                ),
+              ]),
+        )
+      ],
+    );
+  }
+}
+
+class MyTextField extends StatefulWidget {
+  const MyTextField(
+      {super.key,
+      this.hinttext = '',
+      required this.name,
+      required this.callback});
+  final String hinttext;
+  final String name;
+  final Function callback;
+  @override
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderTextField(
+      name: widget.name,
+      validator: (value) {
+        if (value == null || value == "") {
+          return 'Required';
+        }
+      },
+      onSaved: (value) {
+        setState(() {
+          widget.callback(widget.name, value);
+        });
+      },
+      style: TextStyle(fontSize: 14),
+      decoration: InputDecoration(
+        hintText: widget.hinttext,
+        border: OutlineInputBorder(),
+        contentPadding: EdgeInsets.only(left: 10),
+      ),
     );
   }
 }

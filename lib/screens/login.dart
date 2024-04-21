@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kmrapp/screens/ADMIN_home_page.dart';
 import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/register.dart';
 import 'package:kmrapp/screens/root.dart';
+import 'package:kmrapp/screens/ADMIN_root.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,8 +15,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController(
+      text: "test@gmail.com"); //remove initial value later
+  final passwordController =
+      TextEditingController(text: "123123"); //remove initial value later
 
   void loginUser() async {
     try {
@@ -22,7 +26,9 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text, password: passwordController.text);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => RootPage()),
+        // MaterialPageRoute(builder: (context) => RootPage()), //USER ROOT PAGE
+        MaterialPageRoute(
+            builder: (context) => ADMINRootPage()), //ADMIN ROOT PAGE
       );
     } on FirebaseAuthException catch (e) {
       return;
@@ -87,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     labelText: 'Email',
                   ),
-                  controller: emailController,
+                  controller: emailController, //initial value: "test@gmail.com"
                 ),
                 SizedBox(
                   height: 30,
@@ -99,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50)),
                       labelText: 'Password'),
-                  controller: passwordController,
+                  controller: passwordController, //initial value: "123123"
                 ),
                 SizedBox(
                   height: 30,

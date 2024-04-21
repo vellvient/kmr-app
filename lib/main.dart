@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kmrapp/screens/ADMIN_root.dart';
 import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/login.dart';
 import 'package:kmrapp/screens/onboarding_screen.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.plusJakartaSansTextTheme(
               Theme.of(context).textTheme)),
       home: OnboardingScreen(),
-      // home: RootPage(),
+      // home: ADMINRootPage(),
     );
   }
 }
