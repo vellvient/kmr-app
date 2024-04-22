@@ -24,12 +24,21 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-      Navigator.push(
-        context,
-        // MaterialPageRoute(builder: (context) => RootPage()), //USER ROOT PAGE
-        MaterialPageRoute(
-            builder: (context) => ADMINRootPage()), //ADMIN ROOT PAGE
-      );
+
+      if (emailController.text == "admin@gmail.com") {
+        Navigator.push(
+          context,
+          // MaterialPageRoute(builder: (context) => RootPage()), //USER ROOT PAGE
+          MaterialPageRoute(
+              builder: (context) => ADMINRootPage()), //ADMIN ROOT PAGE
+        );
+      } else {
+        Navigator.push(
+          context,
+          // MaterialPageRoute(builder: (context) => RootPage()), //USER ROOT PAGE
+          MaterialPageRoute(builder: (context) => RootPage()), //ADMIN ROOT PAGE
+        );
+      }
     } on FirebaseAuthException catch (e) {
       return;
     }
