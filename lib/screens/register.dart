@@ -5,23 +5,19 @@ import 'package:kmrapp/screens/home_page.dart';
 import 'package:kmrapp/screens/root.dart';
 import 'package:kmrapp/screens/verification_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+  
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     TextEditingController fullNameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController icNumberController = TextEditingController();
     TextEditingController phoneNumberController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
 
     Future<void> handleRegister() async {
       String fullName = fullNameController.text;
-      String email = emailController.text;
-      String icNumber = icNumberController.text;
       String phoneNumber = phoneNumberController.text;
       String password = passwordController.text;
       String confirmPassword = confirmPasswordController.text;
@@ -31,30 +27,47 @@ class RegisterPage extends StatelessWidget {
       }
 
       try {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
+        // Send OTP to the provided phone number
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (PhoneAuthCredential credential) async {
+            // Auto-retrieve the SMS code and sign in
+            await FirebaseAuth.instance.signInWithCredential(credential);
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            // Handle the error here
+            print('Failed to verify phone number: ${e.message}');
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            // Navigate to verification page and pass verification ID
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VerificationPage(
+                  verificationId: verificationId,
+                  phoneNumber: phoneNumber,
+                ),
+              ),
+            );
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            // Handle the code auto-retrieval timeout
+          },
         );
 
-        // Get the newly registered user's ID
-        String userId = userCredential.user!.uid;
-
-        // Store user information in Firestore
+        // Store additional user information in Firestore
+        String userId = FirebaseAuth.instance.currentUser!.uid;
         await FirebaseFirestore.instance.collection('users').doc(userId).set({
           'fullName': fullName,
-          'email': email,
-          'icNumber': icNumber,
           'phoneNumber': phoneNumber,
         });
 
-        //can change this
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RootPage()), //destination
+          MaterialPageRoute(builder: (context) => RootPage()),
         );
       } catch (e) {
-        // if fail
+        // Handle registration failure
         print('Failed to register user: $e');
       }
     }
@@ -121,36 +134,14 @@ class RegisterPage extends StatelessWidget {
                   height: 30,
                 ),
                 TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      labelText: 'Email'),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextField(
-                  controller: icNumberController,
+                  controller: phoneNumberController,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    labelText: 'IC Number',
+                    labelText: 'Phone Number',
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextField(
-                  controller: phoneNumberController,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      labelText: 'Phone Number'),
                 ),
                 SizedBox(
                   height: 30,
@@ -173,13 +164,15 @@ class RegisterPage extends StatelessWidget {
                   controller: confirmPasswordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      labelText: 'Confirm Password'),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    labelText: 'Confirm Password',
+                  ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 50,
                 ),
                 Row(
                   children: [
@@ -188,14 +181,16 @@ class RegisterPage extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                          );
-                        },
-                        child: Text('Login here'))
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
+                      child: Text('Login here'),
+                    )
                   ],
                 ),
                 SizedBox(
@@ -211,7 +206,7 @@ class RegisterPage extends StatelessWidget {
                         color: Color(0xff966FD6),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(50),
-                          onTap: handleRegister, // Call the function here
+                          onTap: handleRegister,
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
